@@ -7,6 +7,7 @@ import AdmZip from 'adm-zip'
 import boxen from 'boxen'
 import { formatBytes } from 'bytes-formatter'
 import dayjs from 'dayjs'
+
 import duration from 'dayjs/plugin/duration'
 import getFolderSize from 'get-folder-size'
 import gradient from 'gradient-string'
@@ -54,7 +55,7 @@ export function consoleBuildInfo(): Plugin {
   let endTime: Dayjs
   let outDir: string
   return {
-    name: 'vite:BuildInfo',
+    name: 'vite:buildConsole',
     configResolved(resolvedConfig) {
       config = resolvedConfig
       outDir = config.build.outDir
@@ -89,12 +90,4 @@ outDir:${outDir}
     },
   }
 }
-
-// packFolder({
-//   dirPath: './dist',
-//   packFullName:'dist'
-// })
-
-export interface Options {
-
-}
+// export const a = 1
