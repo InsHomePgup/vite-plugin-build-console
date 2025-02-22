@@ -39,9 +39,11 @@
   "dependencies": {
     "@types/adm-zip": "^0.5.7",
     "adm-zip": "^0.5.16",
+    "boxen": "^8.0.1",
     "bytes-formatter": "^21.6.15",
     "dayjs": "^1.11.13",
-    "get-folder-size": "^5.0.0"
+    "get-folder-size": "^5.0.0",
+    "gradient-string": "^3.0.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^4.1.1",
