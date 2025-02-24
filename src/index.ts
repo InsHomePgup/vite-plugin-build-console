@@ -83,3 +83,7 @@ export function consoleBuildInfo(): any {
     },
   }
 }
+
+export interface options {
+
+}
