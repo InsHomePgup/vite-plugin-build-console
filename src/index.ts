@@ -1,6 +1,6 @@
 import type { Options as BoxenOptions } from 'boxen'
 import type { Dayjs } from 'dayjs'
-import type { Plugin, ResolvedConfig } from 'vite'
+import type { ResolvedConfig } from 'vite'
 import { resolve } from 'node:path'
 import process from 'node:process'
 import AdmZip from 'adm-zip'
@@ -8,7 +8,7 @@ import boxen from 'boxen'
 import { formatBytes } from 'bytes-formatter'
 import dayjs from 'dayjs'
 
-import duration from 'dayjs/plugin/duration'
+import duration from 'dayjs/plugin/duration.js'
 import getFolderSize from 'get-folder-size'
 import gradient from 'gradient-string'
 
@@ -28,18 +28,11 @@ export async function calcFolderSize({ dirPath }: { dirPath: string }): Promise<
     })
   })
 }
-//
-// const size = await calcFolderSize({
-//   dirPath: './dist',
-// })
-// console.log(size)
 
 export function packFolder({ dirPath, packPre, version, projectName, outDirPath = 'dist', packFullName }: { dirPath: string, packPre?: string, version?: string, projectName?: string, outDirPath?: string, packFullName?: string }): void {
   // pack 文件夹
-  console.log('packFolder', dirPath, packPre, version, projectName, outDirPath, packFullName)
   const sourcePath = resolve(root, dirPath)
   const packName = packFullName ? `${packFullName}.zip` : `${packPre}-${projectName}-${version}.zip`
-  console.log('packFolder', sourcePath, packName)
   zip.addLocalFolder(sourcePath)
   zip.writeZip(resolve(root, outDirPath, packName), (error) => {
     if (error) {
@@ -48,17 +41,18 @@ export function packFolder({ dirPath, packPre, version, projectName, outDirPath 
   })
 }
 
-export function consoleBuildInfo(): Plugin {
+export function consoleBuildInfo(): any {
 //   打包完成后输出构建信息
   let config: ResolvedConfig
   let startTime: Dayjs
   let endTime: Dayjs
   let outDir: string
+  // return 123
   return {
-    name: 'vite:buildConsole',
-    configResolved(resolvedConfig) {
+    name: 'vite-plugin-build-console',
+    configResolved(resolvedConfig: any) {
       config = resolvedConfig
-      outDir = config.build.outDir
+      outDir = config.build.outDir || 'dist'
     },
     buildStart() {
       if (config.command === 'build') {
@@ -73,15 +67,14 @@ export function consoleBuildInfo(): Plugin {
             boxen(
               gradient(['cyan', 'magenta']).multiline(
                 `
-🎉 打包完成（用时${dayjs.duration(endTime.diff(startTime)).format('mm分ss秒')}，包体积：${size}）
-outDir:${outDir}
-`,
+        🎉 打包完成（用时${dayjs.duration(endTime.diff(startTime)).format('mm分ss秒')}，包体积：${size}）
+        outDir:${outDir}
+        `,
               ),
               boxenOptions,
             ),
           )
         })
-
         packFolder({
           dirPath: outDir,
           packFullName: 'dist',
@@ -90,4 +83,3 @@ outDir:${outDir}
     },
   }
 }
-// export const a = 1
