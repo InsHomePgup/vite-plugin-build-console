@@ -95,4 +95,5 @@ export default defineConfig({
 欢迎提交问题和功能请求！也欢迎提交PR。
 
 ## 📄 许可证
-MIT
+
+[MIT License](LICENSE).
