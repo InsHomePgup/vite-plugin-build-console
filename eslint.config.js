@@ -6,6 +6,7 @@ export default antfu(
     type: 'lib',
     ignores: [
       'pnpm-lock.yaml',
+      'README.md',
     ],
   },
   {
