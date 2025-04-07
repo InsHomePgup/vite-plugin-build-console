@@ -49,7 +49,7 @@ export function packFolder({ dirPath, packPre, version, projectName, outDirPath 
 
 export interface BuildConsoleOptions {
   envString?: string[] // 用户指定需要输出的环境变量名列表
-  showPluginVersion?: boolean // 是否显示插件版本号
+  showPluginVersion?: boolean // 是否显示插件版本号，默认false
 }
 
 export function consoleBuildInfo(options: BuildConsoleOptions = {}): any {
@@ -58,8 +58,8 @@ export function consoleBuildInfo(options: BuildConsoleOptions = {}): any {
   let startTime: Dayjs
   let endTime: Dayjs
   let outDir: string
-  // 是否显示插件版本号，默认为true
-  const showPluginVersion = options.showPluginVersion !== false
+  // 是否显示插件版本号，默认为false
+  const showPluginVersion = options.showPluginVersion === true
 
   return {
     name: 'vite-plugin-build-console',
