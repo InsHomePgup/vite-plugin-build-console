@@ -88,18 +88,19 @@ export function consoleBuildInfo(options: BuildConsoleOptions = {}): any {
               )
             : envVars
 
-          // 将环境变量转换为字符串格式
-          const envString = Object.entries(envVarsToShow)
-            .map(([key, value]) => `${key}: ${value}`)
-            .join('\n        ')
-
-          // 根据选项决定是否显示插件版本号
-          const versionInfo = showPluginVersion ? `插件版本: ${pluginVersion}\n        ` : ''
-
           const outInfo = `
-        🎉 打包完成（用时${dayjs.duration(endTime.diff(startTime)).format('mm分ss秒')}，包体积：${size}）
-        outDir:${outDir}
-        ${versionInfo}${envString}
+        🚀 构建信息摘要
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        ✅ 构建状态: 成功完成
+        ⏱️ 构建用时: ${dayjs.duration(endTime.diff(startTime)).format('mm分ss秒')}
+        📦 包体积: ${size}
+        📂 输出目录: ${outDir}
+        ${showPluginVersion ? `🔌 插件版本: ${pluginVersion}\n` : ''}
+        🌐 环境变量:
+${Object.entries(envVarsToShow).map(([key, value]) =>
+  `        • ${key}: ${value}`,
+).join('\n')}
+        ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
         `
           console.info(
             boxen(
@@ -107,10 +108,10 @@ export function consoleBuildInfo(options: BuildConsoleOptions = {}): any {
               boxenOptions,
             ),
           )
-        })
-        packFolder({
-          dirPath: outDir,
-          packFullName: 'dist',
+          packFolder({
+            dirPath: outDir,
+            packFullName: 'dist',
+          })
         })
       }
     },
