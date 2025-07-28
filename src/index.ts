@@ -1,13 +1,14 @@
 import type { Options as BoxenOptions } from 'boxen'
 import type { Dayjs } from 'dayjs'
 import type { ResolvedConfig } from 'vite'
+import * as fs from 'node:fs'
 import { resolve } from 'node:path'
 import process from 'node:process'
 import AdmZip from 'adm-zip'
 import boxen from 'boxen'
 import { formatBytes } from 'bytes-formatter'
-import dayjs from 'dayjs'
 
+import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration.js'
 import getFolderSize from 'get-folder-size'
 import gradient from 'gradient-string'
@@ -37,8 +38,20 @@ export async function calcFolderSize({ dirPath }: { dirPath: string }): Promise<
 
 export function packFolder({ dirPath, packPre, version, projectName, outDirPath = 'dist', packFullName }: { dirPath: string, packPre?: string, version?: string, projectName?: string, outDirPath?: string, packFullName?: string }): void {
   // pack 文件夹
-  const sourcePath = resolve(root, dirPath)
-  const packName = packFullName ? `${packFullName}.zip` : `${packPre}-${projectName}-${version}.zip`
+  const sourcePath: string = resolve(root, dirPath)
+  let packName: string = ''
+  if (packFullName) {
+    packName = packFullName
+  }
+  else {
+    if (packPre) {
+      packName = `${packPre}-${projectName}-${version}.zip`
+    }
+    else {
+      packName = `${projectName}-${version}.zip`
+    }
+  }
+  // const packName = packFullName ? `${packFullName}.zip` : `${packPre}-${projectName}-${version}.zip`
   zip.addLocalFolder(sourcePath)
   zip.writeZip(resolve(root, outDirPath, packName), (error) => {
     if (error) {
@@ -91,7 +104,7 @@ export function consoleBuildInfo(options: BuildConsoleOptions = {}): any {
           const outInfo = `
         🚀 构建信息摘要
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-        ✅ 构建状态: 成功完成
+        ✅ 构建状态: 成功完成123
         ⏱️ 构建用时: ${dayjs.duration(endTime.diff(startTime)).format('mm分ss秒')}
         📦 包体积: ${size}
         📂 输出目录: ${outDir}
@@ -108,10 +121,27 @@ ${Object.entries(envVarsToShow).map(([key, value]) =>
               boxenOptions,
             ),
           )
-          packFolder({
-            dirPath: outDir,
-            packFullName: 'dist',
-          })
+
+          // 读取项目的 package.json 文件获取 name 和 version
+          try {
+            const packageJsonPath = resolve(root, 'package.json')
+            const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf-8'))
+            const projectName = packageJson.name
+            const projectVersion = packageJson.version
+
+            packFolder({
+              dirPath: outDir,
+              projectName,
+              version: projectVersion,
+            })
+          }
+          catch (error) {
+            console.error('读取 package.json 失败，使用默认文件名', error)
+            packFolder({
+              dirPath: outDir,
+              packFullName: 'dist',
+            })
+          }
         })
       }
     },
