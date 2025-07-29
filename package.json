@@ -25,17 +25,23 @@
     "dist"
   ],
   "scripts": {
-    "dev": "pnpm --filter playground-vue-ts dev",
-    "build:test": "pnpm --filter playground-vue-ts build",
+    "dev": "pnpm --filter vue-ts-build dev",
+    "build:test": "pnpm --filter vue-ts-build build",
     "build": "unbuild",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "prepublishOnly": "nr build",
-    "release": "bumpp && pnpm publish",
+    "release:origin": "bumpp && pnpm publish",
     "start": "tsx src/index.ts",
     "test": "vitest",
     "typecheck": "tsc --noEmit",
-    "prepare": "simple-git-hooks"
+    "prepare": "simple-git-hooks",
+    "commit": "cz",
+    "release": "standard-version",
+    "release:beta": "standard-version --prerelease beta",
+    "release:minor": "standard-version --release-as minor",
+    "release:major": "standard-version --release-as major",
+    "release:patch": "standard-version --release-as patch"
   },
   "dependencies": {
     "@types/adm-zip": "^0.5.7",
@@ -53,10 +59,13 @@
     "@types/node": "^24.1.0",
     "@vitejs/plugin-legacy": "7.1.0",
     "bumpp": "^10.2.0",
+    "commitizen": "^4.3.1",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "^9.32.0",
     "lint-staged": "^16.1.2",
     "pnpm": "^10.13.1",
     "simple-git-hooks": "^2.13.0",
+    "standard-version": "^9.5.0",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3",
     "unbuild": "^3.6.0",
@@ -68,5 +77,10 @@
   },
   "lint-staged": {
     "*": "eslint . --fix"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
   }
 }
