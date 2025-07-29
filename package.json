@@ -36,7 +36,7 @@
     "test": "vitest",
     "typecheck": "tsc --noEmit",
     "prepare": "simple-git-hooks",
-    "commit": "cz",
+    "commit": "git add . && eslint . --fix && git add . && cz --no-verify",
     "release": "standard-version",
     "release:beta": "standard-version --prerelease beta",
     "release:minor": "standard-version --release-as minor",
