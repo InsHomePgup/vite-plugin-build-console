@@ -104,7 +104,7 @@ export function consoleBuildInfo(options: BuildConsoleOptions = {}): any {
           const outInfo = `
         🚀 构建信息摘要
         ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-        ✅ 构建状态: 成功完成123
+        ✅ 构建状态: 成功完成
         ⏱️ 构建用时: ${dayjs.duration(endTime.diff(startTime)).format('mm分ss秒')}
         📦 包体积: ${size}
         📂 输出目录: ${outDir}
