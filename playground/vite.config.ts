@@ -8,7 +8,7 @@ export default defineConfig({
     vue(),
     consoleBuildInfo({
       // 指定需要输出的环境变量
-      envString: ['VITE_APP_TITLE', 'VITE_API_URL'],
+      envString: ['VITE_APP_TITLE', 'VITE_API_URL', 'VITE_APP_VERSION'],
       // 显示插件版本
       showPluginVersion: false,
     }),
