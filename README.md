@@ -70,9 +70,9 @@ export default defineConfig({
 
 ## ⚙️ 配置选项
 
-| 选项 | 类型 | 默认值 | 描述 |
-| --- | --- | --- | --- |
-| `envString` | `string[]` | `undefined` | 指定要显示的环境变量列表，如果不指定则显示所有环境变量 |
+| 选项 | 类型 | 默认值  | 描述 |
+| --- | --- |------| --- |
+| `envString` | `string[]` | `[]` | 指定要显示的环境变量列表，如果不指定则显示所有环境变量 |
 
 
 ## 📝 示例
@@ -81,7 +81,7 @@ export default defineConfig({
 ```plaintext
 ┌────────────────────────────────────────────────────┐
 │                                                    │
-│        🎉 打包完成（用时00分05秒，包体积：2.5MB）    │
+│        🎉 打包完成（用时00分05秒，包体积：2.5MB）      │
 │        outDir:dist                                 │
 │        VITE_API_URL: https://api.example.com       │
 │        VITE_APP_VERSION: 1.0.0                     │
