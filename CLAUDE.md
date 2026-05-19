@@ -14,8 +14,7 @@ This is a Vite plugin (`vite-plugin-build-console`) that displays build informat
 - `pnpm build` - Build the plugin using unbuild
 - `pnpm start` - Run src/index.ts directly with tsx
 
-### Testing & Quality
-- `pnpm test` - Run vitest tests
+### Quality
 - `pnpm lint` - Lint the codebase with eslint
 - `pnpm lint:fix` - Auto-fix eslint issues
 - `pnpm typecheck` - Run TypeScript type checking
@@ -57,20 +56,22 @@ The plugin implements Vite's plugin API hooks in `src/index.ts`:
 - With `packPre`: Uses format `{packPre}-{projectName}-{version}.zip`
 - Default: Uses format `{projectName}-{version}.zip`
 
-The ZIP is written to `{outDirPath}/{packName}`, where `outDirPath` defaults to 'dist'.
+The ZIP is written to `{outDirPath}/{packName}`, where `outDirPath` defaults to project root (`'.'`).
 
 **consoleBuildInfo()**: The main exported function that returns a Vite plugin object. Accepts `BuildConsoleOptions`:
 - `envString?: string[]` - Whitelist of environment variable keys to display
 - `showPluginVersion?: boolean` - Whether to show the plugin version in output
+- `zipDir?: string` - Directory to write the ZIP file, defaults to project root
 
 ### Environment Variable Handling
-The plugin displays environment variables from `config.env` (Vite's env object, typically from .env files). If `envString` is provided, only those specific variables are shown; otherwise all are displayed.
+The plugin displays environment variables from `config.env` (Vite's env object, typically from .env files). Vite built-in keys (`MODE`, `BASE_URL`, `DEV`, `PROD`, `SSR`) are always excluded. If `envString` is provided, only those specific variables are shown; otherwise all custom variables are displayed.
 
 ### Build Output
 The plugin uses unbuild with configuration in `build.config.ts`:
 - Entry: `src/index`
 - Declaration: node16
+- Externals: `vite`, `rollup`
 - Output: `dist/index.mjs` and `dist/index.d.mts`
 
-### Testing Strategy
-The playground/ directory contains a minimal Vue 3 + TypeScript application that uses the plugin via workspace protocol (`workspace:*`). This allows testing the plugin during development without publishing.
+### Manual Testing
+Run `pnpm build` first to build the plugin, then `pnpm build:test` to run the playground build and verify the console output and ZIP generation.
