@@ -36,40 +36,39 @@
     "test": "vitest",
     "typecheck": "tsc --noEmit",
     "prepare": "simple-git-hooks",
-    "commit": "git add . && eslint . --fix && git add . && cz --no-verify",
-    "release": "standard-version",
-    "release:beta": "standard-version --prerelease beta",
-    "release:minor": "standard-version --release-as minor",
-    "release:major": "standard-version --release-as major",
-    "release:patch": "standard-version --release-as patch"
+    "commit": "git add . && eslint . --fix && git add . && czg --no-verify",
+    "release": "release-it",
+    "release:beta": "release-it --preRelease=beta",
+    "release:minor": "release-it minor",
+    "release:major": "release-it major",
+    "release:patch": "release-it patch"
   },
   "dependencies": {
-    "@types/adm-zip": "^0.5.7",
-    "adm-zip": "^0.5.16",
+    "@types/adm-zip": "^0.5.8",
+    "adm-zip": "^0.5.17",
     "boxen": "^8.0.1",
     "bytes-formatter": "^21.6.15",
-    "dayjs": "^1.11.19",
+    "dayjs": "^1.11.20",
     "get-folder-size": "^5.0.0",
     "gradient-string": "^3.0.0"
   },
   "devDependencies": {
     "@antfu/eslint-config": "^6.6.1",
-    "@antfu/ni": "^28.0.0",
+    "@antfu/ni": "^30.0.0",
     "@antfu/utils": "^9.3.0",
+    "@release-it/conventional-changelog": "^11.0.0",
     "@types/node": "^24.1.0",
-    "@vitejs/plugin-legacy": "7.2.1",
-    "bumpp": "^10.3.2",
-    "commitizen": "^4.3.1",
-    "cz-conventional-changelog": "^3.3.0",
+    "bumpp": "^11.0.0",
+    "czg": "^1.13.1",
     "eslint": "^9.39.1",
-    "lint-staged": "^16.2.7",
-    "pnpm": "^10.25.0",
+    "lint-staged": "^17.0.0",
+    "pnpm": "^10.28.2",
+    "release-it": "^20.0.0",
     "simple-git-hooks": "^2.13.1",
-    "standard-version": "^9.5.0",
-    "tsx": "^4.21.0",
+    "tsx": "^4.22.0",
     "typescript": "^5.9.3",
     "unbuild": "^3.6.1",
-    "vite": "7.2.7",
+    "vite": "^7.3.2",
     "vitest": "^3.2.4"
   },
   "simple-git-hooks": {
@@ -78,9 +77,8 @@
   "lint-staged": {
     "*": "eslint . --fix"
   },
-  "config": {
-    "commitizen": {
-      "path": "cz-conventional-changelog"
-    }
+  "czg": {
+    "emoji": true,
+    "scopes": []
   }
 }
