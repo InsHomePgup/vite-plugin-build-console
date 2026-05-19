@@ -9,8 +9,8 @@ packages:
   - examples/*
 
 allowBuilds:
-  esbuild: set this to true or false
-  simple-git-hooks: set this to true or false
+  esbuild: true
+  simple-git-hooks: true
 overrides:
   ajv@6: 6.14.0
   brace-expansion@1: 1.1.13
