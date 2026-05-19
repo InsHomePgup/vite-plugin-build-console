@@ -6,4 +6,8 @@ export default defineBuildConfig({
   ],
   declaration: 'node16',
   clean: true,
+  externals: [
+    'vite',
+    'rollup',
+  ],
 })
