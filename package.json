@@ -2,7 +2,7 @@
   "name": "vite-plugin-build-console",
   "type": "module",
   "version": "2.0.1",
-  "description": "",
+  "description": "Vite plugin that displays build info (duration, size, env vars) and creates a ZIP archive after a successful build",
   "author": "Abraham K.",
   "license": "MIT",
   "repository": {
@@ -40,7 +40,8 @@
     "release:beta": "release-it --preRelease=beta",
     "release:minor": "release-it minor",
     "release:major": "release-it major",
-    "release:patch": "release-it patch"
+    "release:patch": "release-it patch",
+    "pub": "pnpm build && pnpm publish"
   },
   "dependencies": {
     "@types/adm-zip": "^0.5.8",
