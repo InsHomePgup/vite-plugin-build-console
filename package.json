@@ -1,7 +1,7 @@
 {
   "name": "vite-plugin-build-console",
   "type": "module",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "description": "Vite plugin that displays build info (duration, size, env vars) and creates a ZIP archive after a successful build",
   "author": "Abraham K.",
   "license": "MIT",
