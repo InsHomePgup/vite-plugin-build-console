@@ -34,7 +34,7 @@ jobs:
         run: |
           oidc_token=$(curl -sS \
             -H "Authorization: bearer ${ACTIONS_ID_TOKEN_REQUEST_TOKEN}" \
-            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=https://registry.npmjs.org/" \
+            "${ACTIONS_ID_TOKEN_REQUEST_URL}&audience=https://registry.npmjs.org" \
             | jq -r '.value')
           npm config set //registry.npmjs.org/:_authToken "${oidc_token}"
           npm publish --provenance --no-git-checks
