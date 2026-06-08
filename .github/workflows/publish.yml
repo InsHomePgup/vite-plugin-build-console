@@ -23,20 +23,24 @@ jobs:
         with:
           node-version: 22
           cache: pnpm
-          registry-url: https://registry.npmjs.org
 
       - run: pnpm install --frozen-lockfile
 
       - run: pnpm build
 
-      - name: Debug
+      - name: Inspect npm Trusted Publishing code
         run: |
-          echo "npm: $(npm --version)"
-          echo "GITHUB_ACTIONS: $GITHUB_ACTIONS"
-          echo "OIDC URL present: $([[ -n \"$ACTIONS_ID_TOKEN_REQUEST_URL\" ]] && echo yes || echo no)"
-          cat ~/.npmrc 2>/dev/null || echo "no ~/.npmrc"
-          cat .npmrc 2>/dev/null || echo "no .npmrc"
+          NPM_LIB=$(npm root -g)/npm
+          echo "=== npm version ==="
+          npm --version
+          echo "=== libnpmpublish publish.js auth section ==="
+          grep -n -A5 -B2 "ENEEDAUTH\|provenance\|oidc\|OIDC\|trusted" \
+            ${NPM_LIB}/node_modules/libnpmpublish/lib/publish.js 2>/dev/null | head -80 || \
+          grep -n -A5 -B2 "ENEEDAUTH\|provenance\|oidc\|OIDC\|trusted" \
+            ${NPM_LIB}/node_modules/libnpmpublish/lib/*.js 2>/dev/null | head -80 || \
+          echo "libnpmpublish not found at expected path"
+          echo "=== npm publish.js auth section ==="
+          grep -rn -A3 "ENEEDAUTH\|getPublishConfig\|provenance" \
+            ${NPM_LIB}/lib/commands/publish.js 2>/dev/null | head -60 || echo "not found"
 
       - run: npm publish --provenance --no-git-checks --ignore-scripts
-        env:
-          NODE_AUTH_TOKEN: ''
