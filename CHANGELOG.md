@@ -1,5 +1,11 @@
 # Changelog
 
+## [2.1.0](https://github.com/InsHomePgup/vite-plugin-build-console/compare/v2.0.2...v2.1.0) (2026-06-30)
+
+### Reverts
+
+* remove CI publish workflow, restore local publish ([f859b1d](https://github.com/InsHomePgup/vite-plugin-build-console/commit/f859b1d36bc161495a8db8164dcbbc562b781d4c))
+
 ## [2.0.2](https://github.com/InsHomePgup/vite-plugin-build-console/compare/v2.0.1...v2.0.2) (2026-06-08)
 
 ### Bug Fixes
